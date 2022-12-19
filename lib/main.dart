@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:qum/ui/bloc/fees/fees_bloc.dart';
 import 'package:qum/ui/pages/dashboard.dart';
 import 'package:qum/ui/pages/fees.dart';
@@ -7,6 +8,7 @@ import 'package:qum/ui/pages/meter_readings.dart';
 import 'di.dart' as di;
 
 void main() {
+  initializeDateFormatting('de');
   di.init();
   runApp(const MyApp());
 }

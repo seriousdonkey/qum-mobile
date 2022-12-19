@@ -7,7 +7,10 @@ final _initialScript = [
     id integer primary key autoincrement, 
     base_fee real not null,
     price_per_unit real not null,
-    monthly_discount real not null)
+    monthly_discount real not null,
+    date_start integer not null,
+    date_end integer not null
+    )
   '''
 ];
 
