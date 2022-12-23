@@ -1,67 +1,28 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
 import 'package:intl/date_symbol_data_local.dart';
-import 'package:qum/ui/bloc/fees/fees_bloc.dart';
-import 'package:qum/ui/pages/dashboard.dart';
-import 'package:qum/ui/pages/fees.dart';
-import 'package:qum/ui/pages/meter_readings.dart';
-import 'di.dart' as di;
+import 'package:qum/app_bindings.dart';
+import 'package:qum/ui/routes/app_pages.dart';
+import 'package:qum/ui/routes/app_routes.dart';
 
 void main() {
   initializeDateFormatting('de');
-  di.init();
-  runApp(const MyApp());
+  runApp(const QumApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  // This widget is the root of your application.
+class QumApp extends StatelessWidget {
+  const QumApp({super.key});
+  
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(create: (_) => di.locator<FeesBloc>()),
-      ],
-      child: MaterialApp(
-        title: 'Qum',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        home: const MainPage(),
+    return GetMaterialApp(
+      title: 'Qum',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
       ),
-    );
-  }
-}
-
-class MainPage extends StatefulWidget {
-  const MainPage({super.key});
-
-  @override
-  State<MainPage> createState() => _MainPageState();
-}
-
-class _MainPageState extends State<MainPage> {
-  final pages = [const Dashboard(), const MeterReadings(), const Fees()];
-
-  int _currentIndex = 0;
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: pages[_currentIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentIndex,
-        onTap: (index) => setState(() => _currentIndex = index),
-        items: const [
-          BottomNavigationBarItem(
-              icon: Icon(Icons.space_dashboard), label: 'Dashboard'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.table_view), label: 'Zählerstand'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.description), label: 'Gebühren'),
-        ],
-      ),
+      getPages: AppPages.pages,
+      initialRoute: AppRoutes.DASHBOARD,
+      initialBinding: AppBindings(),
     );
   }
 }
